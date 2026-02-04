@@ -14,10 +14,6 @@ const nextConfig = {
     }
     return config;
   },
-  // Reduce memory usage during build
-  experimental: {
-    optimizeCss: true,
-  },
 };
 
 module.exports = nextConfig;
