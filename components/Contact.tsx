@@ -10,7 +10,7 @@ import {
   Github, 
   Linkedin, 
   Twitter, 
-  Dribbble, 
+  Instagram, 
   ArrowRight,
   Send,
   MessageCircle,
@@ -54,11 +54,18 @@ export default function Contact() {
         });
       }
 
-      // Social links animation
+      // Social links animation - vertical only to preserve centering
       if (socialRef.current) {
+        // Set initial state to ensure centered
+        gsap.set(socialRef.current.children, {
+          x: 0,
+          opacity: 1,
+        });
+        
         gsap.from(socialRef.current.children, {
-          x: -30,
+          y: 30,
           opacity: 0.5,
+          scale: 0.95,
           duration: 0.6,
           stagger: 0.1,
           ease: "power3.out",
@@ -375,10 +382,10 @@ export default function Contact() {
                   color: "#38bdf8",
                 },
                 { 
-                  icon: Dribbble, 
-                  label: "DRIBBBLE", 
-                  href: "https://dribbble.com",
-                  description: "View my design work",
+                  icon: Instagram, 
+                  label: "INSTAGRAM", 
+                  href: "https://instagram.com",
+                  description: "Follow for daily updates",
                   color: "#ec4899",
                 },
               ].map((social, index) => {
@@ -389,11 +396,11 @@ export default function Contact() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between p-5 bg-[#0a0a0f] border-2 border-white/10 rounded-xl hover:border-[#0ea5e9]/50 transition-all duration-300"
+                    className="group flex flex-col md:flex-row items-center md:items-center md:justify-between p-5 bg-[#0a0a0f] border-2 border-white/10 rounded-xl hover:border-[#0ea5e9]/50 transition-all duration-300 w-full"
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row items-center md:items-center gap-4 w-full md:w-auto justify-center md:justify-start">
                       <div 
-                        className="w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"
+                        className="w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0"
                         style={{ 
                           background: `${social.color}20`, 
                           border: `2px solid ${social.color}40` 
@@ -401,14 +408,14 @@ export default function Contact() {
                       >
                         <Icon className="w-6 h-6" style={{ color: social.color }} />
                       </div>
-                      <div>
+                      <div className="text-center md:text-left">
                         <div className="text-white font-bold uppercase tracking-wider mb-1">
                           {social.label}
                         </div>
                         <div className="text-gray-400 text-sm">{social.description}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-[#0ea5e9] group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-[#0ea5e9] group-hover:translate-x-2 transition-transform hidden md:block" />
                   </a>
                 );
               })}
