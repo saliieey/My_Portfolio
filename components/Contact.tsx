@@ -245,22 +245,22 @@ export default function Contact() {
         {/* Contact Form and Social Links Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           {/* Contact Form */}
-          <div className="bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <MessageCircle className="w-6 h-6 text-[#0ea5e9]" />
-              <h3 className="text-2xl font-bold text-white">Send a Message</h3>
+          <div className="bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-4 sm:p-6 lg:p-8">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#0ea5e9]" />
+              <h3 className="text-xl sm:text-2xl font-bold text-white">Send a Message</h3>
             </div>
             
             {isSubmitted ? (
-              <div className="text-center py-12">
-                <CheckCircle2 className="w-16 h-16 text-[#10b981] mx-auto mb-4" />
-                <h4 className="text-xl font-bold text-white mb-2">Message Sent!</h4>
-                <p className="text-gray-400">I'll get back to you as soon as possible.</p>
+              <div className="text-center py-8 sm:py-12">
+                <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-[#10b981] mx-auto mb-4" />
+                <h4 className="text-lg sm:text-xl font-bold text-white mb-2">Message Sent!</h4>
+                <p className="text-gray-400 text-sm sm:text-base">I'll get back to you as soon as possible.</p>
               </div>
             ) : (
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" style={{ opacity: 1 }}>
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 lg:space-y-6" style={{ opacity: 1 }}>
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label htmlFor="name" className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
                     Your Name
                   </label>
                   <input
@@ -270,13 +270,13 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300 text-sm sm:text-base"
                     placeholder="John Doe"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label htmlFor="email" className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
                     Your Email
                   </label>
                   <input
@@ -286,13 +286,13 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300 text-sm sm:text-base"
                     placeholder="john@example.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label htmlFor="subject" className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
                     Subject
                   </label>
                   <input
@@ -302,13 +302,13 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300 text-sm sm:text-base"
                     placeholder="Project Inquiry"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label htmlFor="message" className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
                     Message
                   </label>
                   <textarea
@@ -318,45 +318,47 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300 resize-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0a0a0f] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all duration-300 resize-none text-sm sm:text-base"
                     placeholder="Tell me about your project..."
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#0ea5e9]/50 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
+                <div className="pt-2 sm:pt-4">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl hover:shadow-[#0ea5e9]/50 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-sm sm:text-base">Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-sm sm:text-base">Send Message</span>
+                        <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </>
+                    )}
+                  </button>
+                </div>
               </form>
             )}
           </div>
 
           {/* Social Links Section */}
-          <div className="bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Globe className="w-6 h-6 text-[#0ea5e9]" />
-              <h3 className="text-2xl font-bold text-white">Connect on Social</h3>
+          <div className="bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-4 sm:p-6 lg:p-8">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-[#0ea5e9]" />
+              <h3 className="text-xl sm:text-2xl font-bold text-white">Connect on Social</h3>
             </div>
-            <p className="text-gray-400 mb-8">
+            <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
               Follow me on social media to stay updated with my latest projects, insights, and tech discussions.
             </p>
             
             <div
               ref={socialRef}
-              className="space-y-4"
+              className="space-y-3 sm:space-y-4"
               style={{ opacity: 1 }}
             >
               {[
@@ -396,38 +398,38 @@ export default function Contact() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-col md:flex-row items-center md:items-center md:justify-between p-5 bg-[#0a0a0f] border-2 border-white/10 rounded-xl hover:border-[#0ea5e9]/50 transition-all duration-300 w-full"
+                    className="group flex flex-col md:flex-row items-center md:items-center md:justify-between p-4 sm:p-5 bg-[#0a0a0f] border-2 border-white/10 rounded-xl hover:border-[#0ea5e9]/50 transition-all duration-300 w-full"
                   >
-                    <div className="flex flex-col md:flex-row items-center md:items-center gap-4 w-full md:w-auto justify-center md:justify-start">
+                    <div className="flex flex-col md:flex-row items-center md:items-center gap-3 sm:gap-4 w-full md:w-auto justify-center md:justify-start">
                       <div 
-                        className="w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0"
                         style={{ 
                           background: `${social.color}20`, 
                           border: `2px solid ${social.color}40` 
                         }}
                       >
-                        <Icon className="w-6 h-6" style={{ color: social.color }} />
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: social.color }} />
                       </div>
                       <div className="text-center md:text-left">
-                        <div className="text-white font-bold uppercase tracking-wider mb-1">
+                        <div className="text-white font-bold uppercase tracking-wider mb-1 text-sm sm:text-base">
                           {social.label}
                         </div>
-                        <div className="text-gray-400 text-sm">{social.description}</div>
+                        <div className="text-gray-400 text-xs sm:text-sm">{social.description}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-[#0ea5e9] group-hover:translate-x-2 transition-transform hidden md:block" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#0ea5e9] group-hover:translate-x-2 transition-transform hidden md:block" />
                   </a>
                 );
               })}
             </div>
 
             {/* Additional Info */}
-            <div className="mt-8 pt-8 border-t border-white/10">
-              <div className="flex items-start gap-3">
-                <MessageCircle className="w-5 h-5 text-[#0ea5e9] mt-1 flex-shrink-0" />
+            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/10">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-[#0ea5e9] mt-1 flex-shrink-0" />
                 <div>
-                  <div className="text-white font-semibold mb-1">Quick Response</div>
-                  <div className="text-gray-400 text-sm">
+                  <div className="text-white font-semibold mb-1 text-sm sm:text-base">Quick Response</div>
+                  <div className="text-gray-400 text-xs sm:text-sm">
                     I typically respond within 24 hours. For urgent matters, please call directly.
                   </div>
                 </div>
