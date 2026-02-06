@@ -120,6 +120,19 @@ export default function Projects() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Set initial state for all cards to prevent layout shifts
+      if (projectsRef.current) {
+        const projectCards = Array.from(projectsRef.current.children) as HTMLElement[];
+        projectCards.forEach((card) => {
+          gsap.set(card, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            clearProps: "transform",
+          });
+        });
+      }
+
       // Projects animation - start visible, just animate in
       if (projectsRef.current) {
         const projectCards = projectsRef.current.children;
@@ -130,40 +143,39 @@ export default function Projects() {
           duration: 0.8,
           stagger: 0.1,
           ease: "power3.out",
+          immediateRender: false,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
+            refreshPriority: -1,
           },
         });
       }
 
-      // Professional hover animations - clean and subtle
+      // Refresh ScrollTrigger to ensure proper initialization on reload
+      ScrollTrigger.refresh();
+
+      // Subtle hover animations - image zoom only, no card movement
       const cards = document.querySelectorAll(".project-card");
       cards.forEach((card) => {
         const gradientHeader = card.querySelector(".gradient-header") as HTMLElement;
         const cardImage = gradientHeader?.querySelector("img") as HTMLImageElement;
         
-        // Mouse enter - professional lift and image zoom
+        // Mouse enter - subtle image zoom only
         card.addEventListener("mouseenter", () => {
-          gsap.killTweensOf([card, gradientHeader, cardImage]);
-          
-          gsap.to(card, {
-            y: -8,
-            duration: 0.4,
-            ease: "power2.out",
-          });
+          gsap.killTweensOf([gradientHeader, cardImage]);
           
           if (cardImage) {
             gsap.to(cardImage, {
-              scale: 1.08,
-              duration: 0.6,
+              scale: 1.05,
+              duration: 0.5,
               ease: "power2.out",
             });
           }
           
           gsap.to(gradientHeader, {
-            filter: "brightness(1.1)",
+            filter: "brightness(1.05)",
             duration: 0.4,
             ease: "power2.out",
           });
@@ -171,13 +183,7 @@ export default function Projects() {
         
         // Mouse leave - smooth reset
         card.addEventListener("mouseleave", () => {
-          gsap.killTweensOf([card, gradientHeader, cardImage]);
-          
-          gsap.to(card, {
-            y: 0,
-            duration: 0.4,
-            ease: "power2.inOut",
-          });
+          gsap.killTweensOf([gradientHeader, cardImage]);
           
           if (cardImage) {
             gsap.to(cardImage, {
@@ -228,16 +234,16 @@ export default function Projects() {
 
         <div
           ref={projectsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
         >
           {projects.map((project, index) => (
             <div
               key={index}
-              className="project-card bg-[#0a0a0f] border-2 border-white/10 rounded-xl overflow-hidden hover:border-[#0ea5e9]/50 transition-all duration-300 group relative flex flex-col cursor-pointer"
+              className="project-card bg-[#0a0a0f] border-2 border-white/10 rounded-xl overflow-hidden hover:border-[#0ea5e9]/50 transition-all duration-300 group relative flex flex-col cursor-pointer h-full"
               style={{ 
                 opacity: 1,
-                willChange: "transform",
-                maxHeight: "600px",
+                visibility: "visible",
+                transform: "translateY(0) scale(1)",
                 position: "relative"
               }}
             >
