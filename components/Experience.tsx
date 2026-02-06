@@ -9,9 +9,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
+    period: "PRESENT",
+    title: "Web Developer",
+    company: "Maelstrom Global Pvt Ltd",
+    achievements: [
+      "Developing and maintaining responsive websites using modern web technologies",
+      "Implementing responsive designs that work seamlessly across all devices",
+      "Working with HTML, CSS, and JavaScript to build interactive web interfaces",
+      "Integrating and customizing WordPress CMS for content management",
+      "Collaborating with design teams to translate mockups into functional websites",
+      "Ensuring cross-browser compatibility and optimizing website performance",
+      "Fixing bugs and implementing website updates and enhancements",
+      "Working with version control systems like Git for code management",
+    ],
+    technologies: ["HTML5", "CSS3", "JavaScript", "WordPress", "Responsive Design", "Git"],
+  },
+  {
     period: "AUGUST 2024 - PRESENT",
     title: "Software Developer",
-    company: "Company Name",
+    company: "NicorAI Intelligent System Pvt Ltd",
     achievements: [
       "Designed and developed modern web interfaces using React.js and Figma",
       "Built dynamic backend APIs with Node.js and Express",
@@ -25,16 +41,19 @@ const experiences = [
     technologies: ["React.js", "Node.js", "Express", "MongoDB", "GSAP", "Figma", "Git"],
   },
   {
-    period: "JANUARY 2023 - JULY 2024",
-    title: "Junior Developer",
-    company: "Previous Company",
+    period: "JULY 2023 - JANUARY 2024",
+    title: "MERN Stack Intern",
+    company: "Luminar Technolab Pvt Ltd",
     achievements: [
-      "Developed responsive web applications using modern JavaScript frameworks",
-      "Collaborated with cross-functional teams in Agile environment",
-      "Implemented RESTful APIs and integrated third-party services",
-      "Improved code quality through unit testing and code reviews",
+      "Gained practical experience in the MERN stack (MongoDB, Express.js, React.js, Node.js)",
+      "Developed responsive web applications using Bootstrap, Tailwind CSS, and Material UI",
+      "Designed and implemented RESTful APIs and CRUD functionalities",
+      "Built full-stack applications including Food Delivery App and Media Player",
+      "Strengthened knowledge of Git, GitHub, and scalable frontend architecture",
+      "Collaborated with team members on various MERN stack projects",
+      "Learned best practices for code organization and project structure",
     ],
-    technologies: ["JavaScript", "React", "Node.js", "PostgreSQL"],
+    technologies: ["React.js", "Node.js", "Express", "MongoDB", "Bootstrap", "Tailwind CSS", "Material UI", "Git"],
   },
 ];
 

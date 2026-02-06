@@ -112,6 +112,113 @@ export default function Navigation() {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    // Setup desktop nav hover animations
+    const desktopNavLinks = document.querySelectorAll(".nav-link");
+    const desktopCleanups: Array<() => void> = [];
+    
+    desktopNavLinks.forEach((link) => {
+      const linkElement = link as HTMLElement;
+      const isActive = linkElement.classList.contains("text-[#0ea5e9]");
+      
+      const handleMouseEnter = () => {
+        if (!isActive) {
+          gsap.to(linkElement, {
+            color: "#0ea5e9",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+      };
+      
+      const handleMouseLeave = () => {
+        if (!isActive) {
+          gsap.to(linkElement, {
+            color: "#9ca3af",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+      };
+
+      link.addEventListener("mouseenter", handleMouseEnter);
+      link.addEventListener("mouseleave", handleMouseLeave);
+
+      desktopCleanups.push(() => {
+        link.removeEventListener("mouseenter", handleMouseEnter);
+        link.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    });
+
+    // Setup mobile menu hover animations
+    const menuItems = document.querySelectorAll(".menu-item");
+    const mobileCleanups: Array<() => void> = [];
+    
+    menuItems.forEach((item) => {
+      const itemElement = item as HTMLElement;
+      const chevron = itemElement.querySelector(".menu-item-chevron") as SVGSVGElement;
+      const textSpan = itemElement.querySelector(".menu-item-text") as HTMLElement;
+      const isActive = itemElement.classList.contains("bg-[#0ea5e9]/20");
+      
+      const handleMouseEnter = () => {
+        if (!isActive && chevron && textSpan) {
+          gsap.to(itemElement, {
+            backgroundColor: "rgba(14, 165, 233, 0.1)",
+            borderColor: "rgba(14, 165, 233, 0.5)",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+          gsap.to(textSpan, {
+            color: "#0ea5e9",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+          gsap.to(chevron, {
+            x: 5,
+            color: "#0ea5e9",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        }
+      };
+      
+      const handleMouseLeave = () => {
+        if (!isActive && chevron && textSpan) {
+          gsap.to(itemElement, {
+            backgroundColor: "transparent",
+            borderColor: "rgba(255, 255, 255, 0.1)",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+          gsap.to(textSpan, {
+            color: "#e5e7eb",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+          gsap.to(chevron, {
+            x: 0,
+            color: "#9ca3af",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        }
+      };
+
+      item.addEventListener("mouseenter", handleMouseEnter);
+      item.addEventListener("mouseleave", handleMouseLeave);
+
+      mobileCleanups.push(() => {
+        item.removeEventListener("mouseenter", handleMouseEnter);
+        item.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    });
+
+    return () => {
+      desktopCleanups.forEach(cleanup => cleanup());
+      mobileCleanups.forEach(cleanup => cleanup());
+    };
+  }, [isMobileMenuOpen, activeSection]);
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -158,13 +265,16 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`px-3 lg:px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                  className={`nav-link px-3 lg:px-4 py-2 text-xs font-semibold uppercase tracking-wider relative transition-colors ${
                     activeSection === item.href
                       ? "text-[#0ea5e9]"
-                      : "text-gray-400 hover:text-white"
+                      : "text-gray-400"
                   }`}
                 >
-                  {item.name}
+                  <span className="relative z-10">{item.name}</span>
+                  {activeSection === item.href && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0ea5e9] rounded-full"></span>
+                  )}
                 </a>
               ))}
             </div>
@@ -241,10 +351,10 @@ export default function Navigation() {
                       key={item.name}
                       href={item.href}
                       onClick={(e) => handleNavClick(e, item.href)}
-                      className={`menu-item w-full px-5 py-4 rounded-xl text-base sm:text-lg font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-between relative ${
+                      className={`menu-item w-full px-5 py-4 rounded-xl text-base sm:text-lg font-bold uppercase tracking-wider flex items-center justify-between relative ${
                         isActive
                           ? "bg-[#0ea5e9]/20 border-2 border-[#0ea5e9] shadow-lg shadow-[#0ea5e9]/30"
-                          : "hover:bg-white/10 border-2 border-white/10"
+                          : "border-2 border-white/10"
                       }`}
                       style={{ 
                         minHeight: "56px",
@@ -261,7 +371,7 @@ export default function Navigation() {
                       }}
                     >
                       <span 
-                        className="flex-1 text-left pr-4 font-semibold" 
+                        className="flex-1 text-left pr-4 font-semibold menu-item-text" 
                         style={{ 
                           color: isActive ? "#ffffff" : "#e5e7eb",
                           fontWeight: 600,
@@ -272,9 +382,7 @@ export default function Navigation() {
                         {item.name}
                       </span>
                       <ChevronRight 
-                        className={`w-5 h-5 flex-shrink-0 transition-transform ${
-                          isActive ? "text-[#0ea5e9]" : "text-gray-400"
-                        }`} 
+                        className="w-5 h-5 flex-shrink-0 menu-item-chevron" 
                         style={{ color: isActive ? "#0ea5e9" : "#9ca3af" }}
                       />
                     </a>

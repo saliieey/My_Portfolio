@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, Github, ArrowRight, Star, TrendingUp, Zap, Users, Shield, Code2 } from "lucide-react";
@@ -15,9 +16,10 @@ const projects = [
     description:
       "A full-stack Spotify-inspired music streaming web application featuring real-time playback, playlist management, and advanced search capabilities. Built with modern architecture supporting 10K+ concurrent users with sub-100ms response times.",
     technologies: ["REACT", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "TAILWINDCSS"],
-    github: "https://github.com",
-    live: "https://example.com",
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://musicflow-1.onrender.com/",
     gradient: "from-purple-600 via-pink-600 to-red-600",
+    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=400&fit=crop&q=80",
     stats: [
       { icon: Users, label: "Users", value: "10K+" },
       { icon: Star, label: "Rating", value: "4.9/5" },
@@ -31,9 +33,10 @@ const projects = [
     description:
       "Production-ready AI company website with RAG-based chat interface, real-time data processing, and scalable cloud infrastructure. Features advanced AI integrations, automated content management, and enterprise-grade security.",
     technologies: ["NEXT.JS", "REACT", "TYPESCRIPT", "NODE.JS", "AWS", "TERRAFORM"],
-    github: "https://github.com",
-    live: "https://example.com",
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://nicorai-website.vercel.app",
     gradient: "from-blue-600 via-cyan-600 to-teal-600",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80",
     stats: [
       { icon: TrendingUp, label: "Requests", value: "1M+/day" },
       { icon: Zap, label: "Uptime", value: "99.9%" },
@@ -42,14 +45,49 @@ const projects = [
     featured: true,
   },
   {
+    title: "Podnest YouTube Agent",
+    subtitle: "YouTube Content Agent Platform",
+    description:
+      "Advanced YouTube agent platform built with Next.js, React, and TypeScript. Features intelligent content management, automated workflows, and seamless integration with YouTube APIs for efficient content creation and management.",
+    technologies: ["NEXT.JS", "REACT", "TYPESCRIPT"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://podnest-youtube-agent.vercel.app",
+    gradient: "from-amber-600 via-orange-600 to-red-600",
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: TrendingUp, label: "Efficiency", value: "+45%" },
+      { icon: Zap, label: "Load Time", value: "1.2s" },
+      { icon: Users, label: "Mobile", value: "100%" },
+    ],
+    featured: false,
+  },
+  {
+    title: "Maelstrom Global",
+    subtitle: "Corporate Website & CMS",
+    description:
+      "Official company website for Maelstrom Global Pvt Ltd featuring advanced GSAP animations, responsive design, and WordPress headless CMS integration. Content creators can manage portfolio works, services, and company information through WordPress backend.",
+    technologies: ["NEXT.JS", "GSAP", "CSS", "WORDPRESS", "HEADLESS CMS"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://maelstrom-global-website.vercel.app/",
+    gradient: "from-green-600 via-emerald-600 to-teal-600",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: Users, label: "Projects", value: "150+" },
+      { icon: TrendingUp, label: "Success", value: "95%" },
+      { icon: Zap, label: "Performance", value: "Fast" },
+    ],
+    featured: false,
+  },
+  {
     title: "LUXE NOIR",
     subtitle: "Premium E-Commerce Platform",
     description:
       "High-end luxury watch showcase website demonstrating advanced GSAP animations, 3D product visualization, and seamless checkout experience. Features custom CMS, inventory management, and integrated payment processing.",
     technologies: ["HTML5", "CSS3", "JAVASCRIPT", "GSAP", "THREE.JS", "STRIPE API"],
-    github: "https://github.com",
-    live: "https://example.com",
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://luxenoirwatches.netlify.app/",
     gradient: "from-amber-600 via-orange-600 to-red-600",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=400&fit=crop&q=80",
     stats: [
       { icon: TrendingUp, label: "Conversion", value: "+45%" },
       { icon: Zap, label: "Load Time", value: "1.2s" },
@@ -58,50 +96,19 @@ const projects = [
     featured: false,
   },
   {
-    title: "TaskFlow",
-    subtitle: "Collaborative Project Management",
+    title: "My Portfolio",
+    subtitle: "Professional Portfolio Website",
     description:
-      "Enterprise-grade project management tool with real-time collaboration, advanced task tracking, and comprehensive analytics. Built with microservices architecture, supporting teams of 1000+ members.",
-    technologies: ["REACT", "NODE.JS", "MONGODB", "WEBSOCKET", "DOCKER", "KUBERNETES"],
-    github: "https://github.com",
-    live: "https://example.com",
-    gradient: "from-green-600 via-emerald-600 to-teal-600",
-    stats: [
-      { icon: Users, label: "Teams", value: "500+" },
-      { icon: TrendingUp, label: "Tasks", value: "50K+" },
-      { icon: Zap, label: "Efficiency", value: "+60%" },
-    ],
-    featured: false,
-  },
-  {
-    title: "FinTech Dashboard",
-    subtitle: "Banking Analytics Platform",
-    description:
-      "Secure financial analytics dashboard for banking institutions with real-time transaction monitoring, fraud detection, and comprehensive reporting. Built with bank-level security, encryption, and compliance standards.",
-    technologies: ["REACT", "PYTHON", "DJANGO", "POSTGRESQL", "AWS", "ELASTICSEARCH"],
-    github: "https://github.com",
-    live: "https://example.com",
+      "Premium portfolio website showcasing professional skills and experience with advanced GSAP animations and fully responsive design. Built with Next.js, TypeScript, and Tailwind CSS featuring smooth animations and modern UI/UX.",
+    technologies: ["NEXT.JS", "TYPESCRIPT", "TAILWINDCSS", "GSAP", "REACT"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://github.com/saliieey?tab=repositories",
     gradient: "from-indigo-600 via-purple-600 to-pink-600",
+    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=400&fit=crop&q=80",
     stats: [
-      { icon: TrendingUp, label: "Transactions", value: "10M+" },
-      { icon: Shield, label: "Security", value: "A+" },
-      { icon: Zap, label: "Accuracy", value: "99.99%" },
-    ],
-    featured: false,
-  },
-  {
-    title: "SocialConnect",
-    subtitle: "Next-Gen Social Platform",
-    description:
-      "Modern social networking platform with real-time messaging, content sharing, live streaming, and advanced privacy controls. Features AI-powered content moderation, recommendation algorithms, and seamless cross-platform synchronization.",
-    technologies: ["NEXT.JS", "REACT", "NODE.JS", "MONGODB", "WEBSOCKET", "GRAPHQL"],
-    github: "https://github.com",
-    live: "https://example.com",
-    gradient: "from-cyan-600 via-blue-600 to-indigo-600",
-    stats: [
-      { icon: Users, label: "Users", value: "1M+" },
-      { icon: Zap, label: "Real-time", value: "Yes" },
-      { icon: TrendingUp, label: "Engagement", value: "+80%" },
+      { icon: TrendingUp, label: "Performance", value: "Fast" },
+      { icon: Zap, label: "Responsive", value: "100%" },
+      { icon: Users, label: "Sections", value: "6+" },
     ],
     featured: false,
   },
@@ -131,226 +138,60 @@ export default function Projects() {
         });
       }
 
-      // Professional developer-focused hover animations
+      // Professional hover animations - clean and subtle
       const cards = document.querySelectorAll(".project-card");
-      cards.forEach((card, cardIndex) => {
+      cards.forEach((card) => {
         const gradientHeader = card.querySelector(".gradient-header") as HTMLElement;
-        const cardContent = card.querySelector(".card-content") as HTMLElement;
-        const codeIcon = gradientHeader?.querySelector("svg") as SVGSVGElement;
-        const techTags = Array.from(card.querySelectorAll(".tech-tag")) as HTMLElement[];
-        const stats = Array.from(card.querySelectorAll(".stat-item")) as HTMLElement[];
-        const statIcons = Array.from(card.querySelectorAll(".stat-item svg")) as SVGSVGElement[];
+        const cardImage = gradientHeader?.querySelector("img") as HTMLImageElement;
         
-        // Ensure all elements are visible by default
-        gsap.set([cardContent, ...techTags, ...stats, ...statIcons], {
-          opacity: 1,
-          visibility: "visible",
-          display: "block"
-        });
-        
-        if (codeIcon) {
-          gsap.set(codeIcon, {
-            opacity: 1,
-            visibility: "visible",
-            display: "block"
-          });
-        }
-        
-        // Create border glow effect element if it doesn't exist
-        let borderGlow = card.querySelector(".border-glow") as HTMLElement;
-        if (!borderGlow) {
-          borderGlow = document.createElement("div");
-          borderGlow.className = "border-glow";
-          borderGlow.style.cssText = `
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(45deg, #0ea5e9, #38bdf8, #0ea5e9);
-            background-size: 200% 200%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -1;
-          `;
-          card.appendChild(borderGlow);
-        }
-        
-        // Mouse enter animation - Developer showcase effect
+        // Mouse enter - professional lift and image zoom
         card.addEventListener("mouseenter", () => {
-          // Kill any existing animations first
-          gsap.killTweensOf([card, borderGlow, gradientHeader, cardContent, codeIcon, ...techTags, ...stats, ...statIcons]);
+          gsap.killTweensOf([card, gradientHeader, cardImage]);
           
-          const tl = gsap.timeline();
-          
-          // Ensure all elements are visible before animating
-          gsap.set([cardContent, ...techTags, ...stats, ...statIcons], { opacity: 1, visibility: "visible" });
-          if (codeIcon) {
-            gsap.set(codeIcon, { opacity: 1, visibility: "visible" });
-          }
-          
-          // Card lift with tech glow
-          tl.to(card, {
-            y: -12,
-            scale: 1.02,
-            duration: 0.5,
-            ease: "power3.out",
-          })
-          // Border glow animation - code execution effect
-          .to(borderGlow, {
-            opacity: 1,
-            backgroundPosition: "200% 200%",
-            duration: 1.5,
-            ease: "none",
-            repeat: -1,
-          }, "<")
-          // Gradient header - code compilation effect
-          .to(gradientHeader, {
-            scale: 1.05,
-            filter: "brightness(1.2) saturate(1.3)",
-            duration: 0.5,
-            ease: "power2.out",
-          }, "<0.1");
-          
-          // Code icon pulse - like typing
-          if (codeIcon) {
-            tl.to(codeIcon, {
-              scale: 1.2,
-              rotation: 5,
-              duration: 0.3,
-              ease: "back.out(1.7)",
-              yoyo: true,
-              repeat: 1,
-            }, "<0.2");
-          }
-          
-          // Content slide up - subtle animation
-          tl.to(cardContent, {
-            y: -3,
+          gsap.to(card, {
+            y: -8,
             duration: 0.4,
             ease: "power2.out",
-          }, "<0.3")
-          // Tech tags stagger - subtle scale and movement
-          .to(techTags, {
-            scale: 1.05,
-            y: -2,
-            duration: 0.3,
-            stagger: 0.05,
-            ease: "back.out(1.5)",
-          }, "<0.4")
-          // Stats animation - subtle scale
-          .to(stats, {
-            scale: 1.05,
-            duration: 0.3,
-            stagger: 0.08,
-            ease: "power2.out",
-          }, "<0.5")
-          // Stat icons animation - bounce and rotate on enter
-          .to(statIcons, {
-            scale: 1.3,
-            rotation: 360,
-            y: -5,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "back.out(1.7)",
-            yoyo: true,
-            repeat: 1,
-          }, "<0.6")
-          // Continuous pulsing animation for icons while hovering
-          .to(statIcons, {
-            scale: 1.15,
-            y: -3,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true,
-          }, "<0.8");
-        });
-        
-        // Mouse leave animation - smooth reset
-        card.addEventListener("mouseleave", () => {
-          const tl = gsap.timeline();
-          
-          // Kill all repeating animations
-          gsap.killTweensOf([borderGlow, ...statIcons]);
-          
-          // Ensure all elements are visible before resetting
-          gsap.set([cardContent, ...techTags, ...stats, ...statIcons], { 
-            opacity: 1, 
-            visibility: "visible",
-            display: "block"
           });
-          if (codeIcon) {
-            gsap.set(codeIcon, { 
-              opacity: 1, 
-              visibility: "visible",
-              display: "block"
+          
+          if (cardImage) {
+            gsap.to(cardImage, {
+              scale: 1.08,
+              duration: 0.6,
+              ease: "power2.out",
             });
           }
           
-          tl.to(card, {
+          gsap.to(gradientHeader, {
+            filter: "brightness(1.1)",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+        
+        // Mouse leave - smooth reset
+        card.addEventListener("mouseleave", () => {
+          gsap.killTweensOf([card, gradientHeader, cardImage]);
+          
+          gsap.to(card, {
             y: 0,
-            scale: 1,
-            duration: 0.5,
-            ease: "power2.inOut",
-          })
-          .to(borderGlow, {
-            opacity: 0,
-            duration: 0.3,
-            ease: "power2.inOut",
-          }, "<")
-          .to(gradientHeader, {
-            scale: 1,
-            filter: "brightness(1) saturate(1)",
             duration: 0.4,
             ease: "power2.inOut",
-          }, "<");
+          });
           
-          if (codeIcon) {
-            tl.to(codeIcon, {
+          if (cardImage) {
+            gsap.to(cardImage, {
               scale: 1,
-              rotation: 0,
-              opacity: 1,
-              visibility: "visible",
-              duration: 0.4,
+              duration: 0.5,
               ease: "power2.inOut",
-            }, "<");
+            });
           }
           
-          tl.to(cardContent, {
-            y: 0,
-            opacity: 1,
-            visibility: "visible",
+          gsap.to(gradientHeader, {
+            filter: "brightness(1)",
             duration: 0.4,
             ease: "power2.inOut",
-          }, "<")
-          .to(techTags, {
-            scale: 1,
-            y: 0,
-            opacity: 1,
-            visibility: "visible",
-            duration: 0.3,
-            ease: "power2.inOut",
-          }, "<")
-          .to(stats, {
-            scale: 1,
-            opacity: 1,
-            visibility: "visible",
-            duration: 0.3,
-            ease: "power2.inOut",
-          }, "<")
-          .to(statIcons, {
-            scale: 1,
-            rotation: 0,
-            y: 0,
-            opacity: 1,
-            visibility: "visible",
-            duration: 0.4,
-            ease: "power2.inOut",
-          }, "<");
+          });
         });
       });
     }, sectionRef);
@@ -392,7 +233,7 @@ export default function Projects() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="project-card bg-[#0a0a0f] border-2 border-white/10 rounded-xl overflow-hidden hover:border-[#0ea5e9]/50 transition-all duration-300 group relative flex flex-col"
+              className="project-card bg-[#0a0a0f] border-2 border-white/10 rounded-xl overflow-hidden hover:border-[#0ea5e9]/50 transition-all duration-300 group relative flex flex-col cursor-pointer"
               style={{ 
                 opacity: 1,
                 willChange: "transform",
@@ -410,16 +251,18 @@ export default function Projects() {
                 </div>
               )}
 
-              {/* Project Image - Using Gradient Background - Reduced Height */}
+              {/* Project Cover Image */}
               <div className={`gradient-header relative h-40 lg:h-44 overflow-hidden bg-gradient-to-br ${project.gradient}`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Code2 className="w-16 h-16 lg:w-20 lg:h-20 text-white opacity-30" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent"></div>
-                {/* Pattern Overlay */}
-                <div className="absolute inset-0 opacity-20" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }}></div>
+                <Image
+                  src={project.image}
+                  alt={`${project.title} - ${project.subtitle}`}
+                  fill
+                  className="object-cover transition-transform duration-600 ease-out"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={project.featured}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent opacity-80"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-transparent"></div>
               </div>
 
               <div className="card-content p-4 lg:p-5 flex flex-col flex-1">
@@ -510,7 +353,7 @@ export default function Projects() {
               Explore more projects, contributions, and open-source work on GitHub
             </p>
             <a
-              href="https://github.com"
+              href="https://github.com/saliieey?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white rounded-xl font-bold hover:shadow-2xl hover:shadow-[#0ea5e9]/50 transition-all duration-300 transform hover:scale-105"
