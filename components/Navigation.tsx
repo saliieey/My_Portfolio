@@ -103,6 +103,32 @@ export default function Navigation() {
     if (isMobileMenuOpen) {
       // Prevent body scroll when menu is open
       document.body.style.overflow = "hidden";
+      
+      // Ensure menu items are visible and animate them in
+      if (mobileMenuRef.current) {
+        const menuItems = mobileMenuRef.current.querySelectorAll(".menu-item");
+        menuItems.forEach((item, index) => {
+          const itemElement = item as HTMLElement;
+          // Set initial visible state - ensure it's visible
+          gsap.set(itemElement, {
+            opacity: 1,
+            visibility: "visible",
+            display: "flex",
+            y: 0,
+            x: 0,
+          });
+          
+          // Animate in with a slight delay for each item
+          gsap.from(itemElement, {
+            opacity: 0,
+            y: 20,
+            duration: 0.4,
+            delay: index * 0.05,
+            ease: "power2.out",
+            immediateRender: false,
+          });
+        });
+      }
     } else {
       document.body.style.overflow = "";
     }
@@ -307,13 +333,9 @@ export default function Navigation() {
             className="md:hidden fixed inset-0 bg-[#0a0a0f] z-[101] overflow-y-auto flex flex-col"
             style={{ 
               pointerEvents: 'auto',
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              width: '100%',
-              height: '100%'
+              width: '100vw',
+              height: '100vh',
+              maxHeight: '100vh'
             }}
           >
             {/* Menu Header - Fixed at Top */}
@@ -332,18 +354,15 @@ export default function Navigation() {
 
             {/* Navigation Links - Centered Professional Layout */}
             <div 
-              className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-8 w-full"
+              className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-8 w-full min-h-0"
               style={{
-                minHeight: '0',
-                overflow: 'visible',
+                overflowY: 'auto',
+                overflowX: 'hidden',
                 position: 'relative',
                 zIndex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
               }}
             >
-              <div className="space-y-3 w-full max-w-md mx-auto" style={{ width: '100%' }}>
+              <div className="space-y-3 w-full max-w-md mx-auto">
                 {navItems.map((item, index) => {
                   const isActive = activeSection === item.href;
                   return (
@@ -351,39 +370,24 @@ export default function Navigation() {
                       key={item.name}
                       href={item.href}
                       onClick={(e) => handleNavClick(e, item.href)}
-                      className={`menu-item w-full px-5 py-4 rounded-xl text-base sm:text-lg font-bold uppercase tracking-wider flex items-center justify-between relative ${
+                      className={`menu-item w-full px-5 py-4 rounded-xl text-base sm:text-lg font-bold uppercase tracking-wider flex items-center justify-between relative transition-all ${
                         isActive
-                          ? "bg-[#0ea5e9]/20 border-2 border-[#0ea5e9] shadow-lg shadow-[#0ea5e9]/30"
-                          : "border-2 border-white/10"
+                          ? "bg-[#0ea5e9]/20 border-2 border-[#0ea5e9] shadow-lg shadow-[#0ea5e9]/30 text-white"
+                          : "border-2 border-white/10 text-gray-200 hover:border-[#0ea5e9]/30"
                       }`}
                       style={{ 
                         minHeight: "56px",
-                        opacity: 1,
-                        visibility: "visible",
-                        display: "flex",
-                        position: "relative",
-                        zIndex: 2,
-                        pointerEvents: "auto",
-                        color: isActive ? "#ffffff" : "#e5e7eb",
-                        backgroundColor: isActive ? "rgba(14, 165, 233, 0.2)" : "transparent",
-                        width: "100%",
-                        marginBottom: index < navItems.length - 1 ? "12px" : "0"
                       }}
                     >
                       <span 
-                        className="flex-1 text-left pr-4 font-semibold menu-item-text" 
-                        style={{ 
-                          color: isActive ? "#ffffff" : "#e5e7eb",
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          lineHeight: "1.5"
-                        }}
+                        className="flex-1 text-left pr-4 font-semibold menu-item-text"
                       >
                         {item.name}
                       </span>
                       <ChevronRight 
-                        className="w-5 h-5 flex-shrink-0 menu-item-chevron" 
-                        style={{ color: isActive ? "#0ea5e9" : "#9ca3af" }}
+                        className={`w-5 h-5 flex-shrink-0 menu-item-chevron transition-colors ${
+                          isActive ? "text-[#0ea5e9]" : "text-gray-400"
+                        }`}
                       />
                     </a>
                   );

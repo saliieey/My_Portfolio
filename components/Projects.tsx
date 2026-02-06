@@ -168,9 +168,9 @@ export default function Projects() {
           
           if (cardImage) {
             gsap.to(cardImage, {
-              scale: 1.05,
-              duration: 0.5,
-              ease: "power2.out",
+            scale: 1.05,
+            duration: 0.5,
+            ease: "power2.out",
             });
           }
           
