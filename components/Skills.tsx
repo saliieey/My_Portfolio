@@ -136,21 +136,8 @@ export default function Skills() {
         const shimmerOverlays = card.querySelectorAll(".shimmer-overlay");
         
         card.addEventListener("mouseenter", () => {
-          const tl = gsap.timeline();
-          
-          // Card lift animation
-          tl.to(card, {
-            y: -5,
-            scale: 1.02,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-          
           // Progress bars live animation - pulsing and shimmer effect
           progressBars.forEach((bar, index) => {
-            const width = bar.getAttribute("data-width") || "0";
-            const currentWidth = parseFloat(width);
-            
             // Pulsing effect - slight scale animation
             gsap.to(bar, {
               scaleX: 1.02,
@@ -187,14 +174,6 @@ export default function Skills() {
         });
         
         card.addEventListener("mouseleave", () => {
-          // Reset card position
-          gsap.to(card, {
-            y: 0,
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-          
           // Kill all progress bar animations
           progressBars.forEach((bar) => {
             gsap.killTweensOf(bar);
