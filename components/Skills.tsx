@@ -27,11 +27,11 @@ const skillCategories = [
     color: "#10b981",
     skills: [
       { name: "Node.js / Express", level: 93 },
-      { name: "Python / Django", level: 88 },
-      { name: "RESTful / GraphQL APIs", level: 92 },
-      { name: "Microservices Architecture", level: 85 },
-      { name: "Serverless Functions", level: 80 },
-      { name: "API Design & Documentation", level: 90 },
+      { name: "Next.js API Routes", level: 90 },
+      { name: "RESTful APIs", level: 92 },
+      { name: "Authentication & Authorization (JWT)", level: 88 },
+      { name: "Server-side Logic & Data Handling", level: 90 },
+      { name: "Database Integration (MongoDB / SQL)", level: 89 },
     ],
   },
   {
@@ -53,9 +53,9 @@ const skillCategories = [
     color: "#a855f7",
     skills: [
       { name: "React Native", level: 88 },
-      { name: "Flutter / Dart", level: 80 },
-      { name: "iOS / Swift", level: 75 },
-      { name: "Android / Kotlin", level: 78 },
+      { name: "Expo (React Native)", level: 85 },
+      { name: "Cross-Platform Mobile Development", level: 87 },
+      { name: "Mobile API Integration", level: 86 },
       { name: "PWA Development", level: 90 },
       { name: "Mobile UI/UX", level: 85 },
     ],
@@ -94,7 +94,20 @@ export default function Skills() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Cards animation - start more visible
+      // Set initial state for all cards to prevent layout shifts
+      if (cardsRef.current) {
+        const cards = Array.from(cardsRef.current.children) as HTMLElement[];
+        cards.forEach((card) => {
+          gsap.set(card, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            clearProps: "transform",
+          });
+        });
+      }
+
+      // Cards animation - start visible, just animate in
       if (cardsRef.current) {
         const cards = cardsRef.current.children;
         gsap.from(cards, {
@@ -104,13 +117,18 @@ export default function Skills() {
           duration: 0.8,
           stagger: 0.1,
           ease: "power3.out",
+          immediateRender: false,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
+            refreshPriority: -1,
           },
         });
       }
+
+      // Refresh ScrollTrigger to ensure proper initialization on reload
+      ScrollTrigger.refresh();
 
       // Progress bar animations
       const progressBars = document.querySelectorAll(".progress-bar");
@@ -225,7 +243,10 @@ export default function Skills() {
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          style={{ opacity: 1 }}
+          style={{ 
+            opacity: 1,
+            visibility: "visible"
+          }}
         >
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
@@ -233,7 +254,12 @@ export default function Skills() {
               <div
                 key={index}
                 className="skill-card bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-6 hover:border-[#0ea5e9]/50 transition-all duration-300 group relative overflow-hidden"
-                style={{ opacity: 1 }}
+                style={{ 
+                  opacity: 1,
+                  visibility: "visible",
+                  transform: "translateY(0) scale(1)",
+                  position: "relative"
+                }}
               >
                 {/* Gradient Background on Hover */}
                 <div 
