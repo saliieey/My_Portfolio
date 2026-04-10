@@ -30,6 +30,7 @@ export default function Contact() {
     email: "",
     subject: "",
     message: "",
+    botcheck: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -141,7 +142,7 @@ export default function Contact() {
       
       // Reset form after 3 seconds
       setTimeout(() => {
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", subject: "", message: "", botcheck: "" });
         setIsSubmitted(false);
       }, 3000);
     } catch (error) {
@@ -275,6 +276,16 @@ export default function Contact() {
               </div>
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 lg:space-y-6" style={{ opacity: 1 }}>
+                <input
+                  type="text"
+                  name="botcheck"
+                  className="hidden"
+                  style={{ display: 'none' }}
+                  value={formData.botcheck}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
                 <div>
                   <label htmlFor="name" className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
                     Your Name
