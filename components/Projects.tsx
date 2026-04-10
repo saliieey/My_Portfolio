@@ -45,6 +45,23 @@ const projects = [
     featured: true,
   },
   {
+    title: "Maelstrom Frames",
+    subtitle: "Editorial Photography Portfolio",
+    description:
+      "A high-performance, premium editorial-style photography portfolio website. It features dynamic media handling, interactive grid galleries, and cinematic scroll animations to deliver a sophisticated user experience.",
+    technologies: ["NEXT.JS", "TYPESCRIPT", "TAILWINDCSS", "GSAP", "FRAMER MOTION"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://maelstrom-frames.vercel.app/",
+    gradient: "from-stone-600 via-neutral-600 to-zinc-600",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: Zap, label: "Scroll", value: "Cinematic" },
+      { icon: Star, label: "Design", value: "Editorial" },
+      { icon: Code2, label: "Routing", value: "Dynamic" },
+    ],
+    featured: true,
+  },
+  {
     title: "Podnest YouTube Agent",
     subtitle: "YouTube Content Agent Platform",
     description:
