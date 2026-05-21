@@ -62,6 +62,23 @@ const projects = [
     featured: true,
   },
   {
+    title: "Pikuboo",
+    subtitle: "Web Application",
+    description:
+      "A modern, responsive web application built with React and Vite. Features a dynamic user interface with optimized performance and seamless user experience.",
+    technologies: ["REACT", "VITE", "TAILWINDCSS", "TYPESCRIPT"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://pikuboo-website.vercel.app/",
+    gradient: "from-pink-500 via-rose-500 to-red-500",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: Zap, label: "Performance", value: "Fast" },
+      { icon: Star, label: "Design", value: "Modern" },
+      { icon: Users, label: "Responsive", value: "100%" },
+    ],
+    featured: true,
+  },
+  {
     title: "Podnest YouTube Agent",
     subtitle: "YouTube Content Agent Platform",
     description:
