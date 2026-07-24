@@ -79,6 +79,40 @@ const projects = [
     featured: true,
   },
   {
+    title: "Enterprise MERN Investment, Daily ROI & Multi-Level Referral SaaS Platform",
+    subtitle: "Enterprise SaaS Platform",
+    description:
+      "A production-grade MERN SaaS application featuring secure JWT authentication, MongoDB Atlas integration, investment package management, automated daily ROI payouts, multi-level referral commissions, wallet tracking, audit ledger history, admin-controlled cron execution, and a responsive analytics dashboard.",
+    technologies: ["REACT", "VITE", "NODE.JS", "EXPRESS", "MONGODB", "JWT", "TAILWINDCSS", "NODE CRON"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://investment-app-inky.vercel.app",
+    gradient: "from-emerald-600 via-teal-600 to-cyan-600",
+    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: TrendingUp, label: "Daily ROI", value: "1.5%" },
+      { icon: Users, label: "Referral Levels", value: "5 Levels" },
+      { icon: Shield, label: "Architecture", value: "Enterprise" },
+    ],
+    featured: true,
+  },
+  {
+    title: "Simpex Services",
+    subtitle: "Home Services & HVAC Maintenance Platform",
+    description:
+      "An agency-grade home services and appliance repair booking platform built with React 19 and Vite. Features lazy-loaded page routing, multi-step booking drawer, Framer Motion animations, comprehensive dynamic SEO metadata schema, and responsive UI for AC, Washer, and Refrigerator repair services.",
+    technologies: ["REACT", "VITE", "REACT ROUTER", "FRAMER MOTION", "LUCIDE ICONS", "VANILLA CSS"],
+    github: "https://github.com/saliieey/Simpex-Website",
+    live: "https://simpex-website.vercel.app",
+    gradient: "from-sky-600 via-blue-600 to-indigo-600",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop&q=80",
+    stats: [
+      { icon: Zap, label: "Booking", value: "Instant" },
+      { icon: Star, label: "Services", value: "HVAC & Repair" },
+      { icon: Users, label: "Response", value: "<30 Min" },
+    ],
+    featured: true,
+  },
+  {
     title: "Podnest YouTube Agent",
     subtitle: "YouTube Content Agent Platform",
     description:
