@@ -1,184 +1,149 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Briefcase } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from "framer-motion";
+import { Briefcase, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
-    period: "PRESENT",
-    title: "Web Developer",
-    company: "Maelstrom Global Pvt Ltd",
-    achievements: [
-      "Developing and maintaining responsive websites using modern web technologies",
-      "Implementing responsive designs that work seamlessly across all devices",
-      "Working with HTML, CSS, and JavaScript to build interactive web interfaces",
-      "Integrating and customizing WordPress CMS for content management",
-      "Collaborating with design teams to translate mockups into functional websites",
-      "Ensuring cross-browser compatibility and optimizing website performance",
-      "Fixing bugs and implementing website updates and enhancements",
-      "Working with version control systems like Git for code management",
-    ],
-    technologies: ["HTML5", "CSS3", "JavaScript", "WordPress", "Responsive Design", "Git"],
-  },
-  {
-    period: "AUGUST 2024 - PRESENT",
+    period: "August 2024 – Present",
     title: "Software Developer",
     company: "NicorAI Intelligent System Pvt Ltd",
-    achievements: [
-      "Designed and developed modern web interfaces using React.js and Figma",
-      "Built dynamic backend APIs with Node.js and Express",
-      "Created engaging animations using GSAP and improved performance by 30%",
-      "Worked with Git/GitHub for version control and team collaboration",
-      "Developed and maintained responsive front-end interfaces",
-      "Designed prototypes in Figma and translated them into production-ready code",
-      "Integrated backend APIs and handled data management using MongoDB",
-      "Ensured code quality and optimized performance across all platforms",
+    location: "Kerala, India",
+    type: "Full-Time",
+    summary:
+      "Developing web application interfaces and backend services for AI-focused product platforms.",
+    responsibilities: [
+      "Engineered responsive web interfaces using React.js, Next.js, and Tailwind CSS from Figma designs.",
+      "Developed RESTful backend APIs and server-side data handlers with Node.js, Express, and MongoDB.",
+      "Implemented smooth UI animations using GSAP and Framer Motion, enhancing frontend interactivity and render efficiency.",
+      "Collaborated using Git/GitHub for version control, code management, and structured release workflows.",
     ],
-    technologies: ["React.js", "Node.js", "Express", "MongoDB", "GSAP", "Figma", "Git"],
+    technologies: ["React.js", "Next.js", "Node.js", "Express", "MongoDB", "GSAP", "Figma", "Git"],
   },
   {
-    period: "JULY 2023 - JANUARY 2024",
+    period: "August 2024 – Present",
+    title: "Web Developer",
+    company: "Maelstrom Global Pvt Ltd",
+    location: "Kerala, India",
+    type: "Client / Full-Time",
+    summary:
+      "Building and maintaining client websites, media portfolio showcases, and headless CMS integrations.",
+    responsibilities: [
+      "Built performant, mobile-first websites using Next.js, HTML5, CSS3, and JavaScript.",
+      "Integrated and customized WordPress CMS / Headless CMS for non-technical content management.",
+      "Ensured cross-browser compatibility, responsive layout scaling, and frontend optimization across all viewport sizes.",
+    ],
+    technologies: ["Next.js", "HTML5", "CSS3", "JavaScript", "WordPress", "Responsive Design", "Git"],
+  },
+  {
+    period: "July 2023 – January 2024",
     title: "MERN Stack Intern",
     company: "Luminar Technolab Pvt Ltd",
-    achievements: [
-      "Gained practical experience in the MERN stack (MongoDB, Express.js, React.js, Node.js)",
-      "Developed responsive web applications using Bootstrap, Tailwind CSS, and Material UI",
-      "Designed and implemented RESTful APIs and CRUD functionalities",
-      "Built full-stack applications including Food Delivery App and Media Player",
-      "Strengthened knowledge of Git, GitHub, and scalable frontend architecture",
-      "Collaborated with team members on various MERN stack projects",
-      "Learned best practices for code organization and project structure",
+    location: "Kerala, India",
+    type: "Internship",
+    summary:
+      "Completed intensive practical training in full-stack JavaScript development across MongoDB, Express, React, and Node.js.",
+    responsibilities: [
+      "Gained hands-on experience developing full-stack web applications using the MERN stack.",
+      "Built responsive frontends with Bootstrap, Tailwind CSS, and Material UI.",
+      "Designed RESTful APIs, CRUD operations, database schemas, and client authentication integrations.",
     ],
-    technologies: ["React.js", "Node.js", "Express", "MongoDB", "Bootstrap", "Tailwind CSS", "Material UI", "Git"],
+    technologies: ["React.js", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Bootstrap", "REST APIs"],
   },
 ];
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Timeline items animation
-      if (timelineRef.current) {
-        const items = timelineRef.current.children;
-        gsap.from(items, {
-          x: -100,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-
-      // Animate timeline line
-      gsap.to(".timeline-line", {
-        height: "100%",
-        duration: 2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 60%",
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      // Animate timeline dots
-      const dots = document.querySelectorAll(".timeline-dot");
-      dots.forEach((dot) => {
-        ScrollTrigger.create({
-          trigger: dot,
-          start: "top 85%",
-          onEnter: () => {
-            gsap.to(dot, {
-              scale: 1.5,
-              duration: 0.3,
-              yoyo: true,
-              repeat: 1,
-              ease: "power2.out",
-            });
-          },
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
       id="experience"
-      ref={sectionRef}
-      className="relative py-16 md:py-20 lg:py-32 overflow-hidden z-10"
+      className="relative py-20 md:py-28 overflow-hidden z-10 border-t border-white/5"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-space)" }}>
-            Experience
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="mb-14">
+          <span className="text-xs font-bold text-[#0ea5e9] uppercase tracking-wider">
+            02 — Career Journey
+          </span>
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2"
+            style={{ fontFamily: "var(--font-space)" }}
+          >
+            Work Experience
           </h2>
-          <div className="w-20 h-1 bg-[#0ea5e9] mx-auto"></div>
+          <div className="w-16 h-1 bg-[#0ea5e9] mt-4 rounded-full" />
         </div>
 
-        <div ref={timelineRef} className="relative">
-          {/* Timeline Line */}
-          <div
-            className="absolute left-8 md:left-0 top-0 bottom-0 w-0.5 bg-[#0ea5e9] timeline-line"
-            style={{ height: "0%" }}
-          ></div>
+        {/* Timeline List */}
+        <div className="relative space-y-8 before:absolute before:inset-0 before:left-3 md:before:left-6 before:w-0.5 before:bg-white/10">
+          {experiences.map((exp, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+              className="relative pl-8 md:pl-14 group"
+            >
+              {/* Timeline Indicator Dot */}
+              <div className="absolute left-1.5 md:left-4.5 top-1.5 w-3 h-3 bg-[#0ea5e9] rounded-full ring-4 ring-[#090a0f] group-hover:scale-125 transition-transform" />
 
-          {experiences.map((exp, index) => (
-            <div key={index} className="relative pl-16 md:pl-12 mb-12">
-              {/* Timeline Dot */}
-              <div className="timeline-dot absolute left-6 md:left-[-6px] top-0 w-4 h-4 bg-[#0ea5e9] rounded-full border-4 border-[#0a0a0f] z-10"></div>
-
-              {/* Content Card */}
-              <div className="bg-[#0a0a0f] border border-white/10 rounded-xl p-6 md:p-8 hover:border-[#0ea5e9]/50 transition-all duration-300">
-                <div className="mb-4">
-                  <div className="text-sm text-[#0ea5e9] font-semibold uppercase tracking-wider mb-2">
-                    {exp.period}
+              {/* Card Container */}
+              <div className="p-6 md:p-8 bg-white/[0.02] hover:bg-white/[0.03] border border-white/10 rounded-2xl transition-all space-y-4">
+                {/* Role Header */}
+                <div className="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-white/10">
+                  <div>
+                    <span className="text-xs font-semibold text-[#0ea5e9] uppercase tracking-wider">
+                      {exp.type}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
+                      {exp.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-sm text-gray-300 font-medium mt-1">
+                      <Briefcase className="w-4 h-4 text-[#0ea5e9]" />
+                      <span>{exp.company}</span>
+                    </div>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                    {exp.title}
-                  </h3>
-                  <div className="flex items-center text-gray-400">
-                    <Briefcase className="w-5 h-5 mr-2" />
-                    <span>{exp.company}</span>
+
+                  <div className="flex flex-col sm:items-end text-xs text-gray-400 gap-1 font-mono">
+                    <span className="flex items-center gap-1.5 text-gray-300 font-semibold">
+                      <Calendar className="w-3.5 h-3.5 text-[#0ea5e9]" />
+                      {exp.period}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {exp.location}
+                    </span>
                   </div>
                 </div>
 
-                <ul className="space-y-3 mb-6">
-                  {exp.achievements.map((achievement, itemIndex) => (
-                    <li
-                      key={itemIndex}
-                      className="text-gray-300 flex items-start"
-                    >
-                      <span className="text-[#0ea5e9] mr-3 mt-1">▸</span>
-                      <span className="leading-relaxed">{achievement}</span>
+                {/* Summary */}
+                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed italic">
+                  {exp.summary}
+                </p>
+
+                {/* Bulleted Responsibilities */}
+                <ul className="space-y-2 text-xs sm:text-sm text-gray-300">
+                  {exp.responsibilities.map((resp, rIdx) => (
+                    <li key={rIdx} className="flex items-start gap-2.5">
+                      <span className="text-[#0ea5e9] font-bold mt-0.5">•</span>
+                      <span className="leading-relaxed">{resp}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="flex flex-wrap gap-2">
-                  {exp.technologies.map((tech, techIndex) => (
+                {/* Technology Badges */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  {exp.technologies.map((tech, tIdx) => (
                     <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-[#0ea5e9]/10 border border-[#0ea5e9]/30 rounded-lg text-xs font-medium text-[#0ea5e9] uppercase"
+                      key={tIdx}
+                      className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-md text-[11px] font-semibold text-gray-300 uppercase tracking-wide"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

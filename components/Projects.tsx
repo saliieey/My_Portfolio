@@ -1,443 +1,395 @@
-
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ExternalLink, Github, ArrowRight, Star, TrendingUp, Zap, Users, Shield, Code2 } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, ArrowRight, ChevronDown, Eye } from "lucide-react";
+import ProjectModal, { ProjectData } from "./ProjectModal";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const projects = [
+const featuredProjects: ProjectData[] = [
   {
-    title: "MusicFlow",
-    subtitle: "Music Streaming Platform",
+    title: "Enterprise MERN Investment, ROI & Referral SaaS",
+    subtitle: "Full-Stack Financial SaaS Platform",
+    type: "Full-Stack SaaS",
     description:
-      "A full-stack Spotify-inspired music streaming web application featuring real-time playback, playlist management, and advanced search capabilities. Built with modern architecture supporting 10K+ concurrent users with sub-100ms response times.",
-    technologies: ["REACT", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "TAILWINDCSS"],
-    github: "https://github.com/saliieey?tab=repositories",
-    live: "https://musicflow-1.onrender.com/",
-    gradient: "from-purple-600 via-pink-600 to-red-600",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: Users, label: "Users", value: "10K+" },
-      { icon: Star, label: "Rating", value: "4.9/5" },
-      { icon: Zap, label: "Performance", value: "<100ms" },
+      "Production-grade MERN SaaS application featuring secure JWT authentication, MongoDB Atlas integration, investment package management, automated daily ROI payouts, multi-level referral commissions, wallet tracking, and audit ledger history.",
+    fullOverview:
+      "This application demonstrates enterprise full-stack development capability beyond standard landing pages. Built with Node.js, Express, and MongoDB on the backend, paired with a fast React & Vite frontend, it handles complete investment workflows, wallet transactions, automated daily ROI yield calculations via background cron scheduling, multi-level referral payouts, and admin controls.",
+    problem:
+      "Financial platforms require absolute data consistency, secure session handling, transactional wallet updates, and automated background calculations without manual database updates.",
+    solution:
+      "Designed a modular MERN architecture with JWT-authenticated API endpoints, schema validation, scheduled node-cron processes for daily ROI payouts, and a real-time analytics dashboard.",
+    keyFeatures: [
+      "JWT Authentication & Password Hashing with Bcrypt",
+      "Investment Package Subscription & Wallet Balance Management",
+      "Automated Daily ROI Yield Processing via Node-Cron",
+      "Multi-Level Referral Commission Calculation (5 Levels)",
+      "Transactional Wallet Audit Ledger & Transaction History",
+      "Admin Control Panel & Analytics Dashboard",
     ],
-    featured: true,
+    technologies: ["React", "Vite", "Node.js", "Express", "MongoDB", "JWT", "Tailwind CSS", "Node-Cron"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://investment-app-inky.vercel.app",
+    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1000&q=80",
+    badge: "Featured SaaS",
   },
   {
-    title: "NicorAI",
-    subtitle: "AI-Powered Enterprise Platform",
+    title: "MusicFlow",
+    subtitle: "Spotify-Inspired Streaming Web App",
+    type: "Full-Stack Web App",
     description:
-      "Production-ready AI company website with RAG-based chat interface, real-time data processing, and scalable cloud infrastructure. Features advanced AI integrations, automated content management, and enterprise-grade security.",
-    technologies: ["NEXT.JS", "REACT", "TYPESCRIPT", "NODE.JS", "AWS", "TERRAFORM"],
+      "Full-stack music streaming platform that allows users to search tracks, play audio seamlessly, build custom playlists, and save favorite songs using the Jamendo API.",
+    fullOverview:
+      "MusicFlow is a Spotify-inspired web streaming application engineered with React, TypeScript, Node.js, Express, and PostgreSQL. It features real-time audio playback controls, persistent custom playlists, tracks search via Jamendo API integration, and clean responsive UI styling.",
+    problem:
+      "Delivering smooth, uninterrupted audio playback while managing state transitions, track searches, and asynchronous playlist updates on mobile and desktop devices.",
+    solution:
+      "Architected a centralized audio playback engine with React Context, type-safe API requests, and responsive media layout patterns.",
+    keyFeatures: [
+      "Jamendo API Integration for Global Track Search",
+      "Persistent Audio Playback Engine with Progress Controls",
+      "Custom User Playlist Creation & Management",
+      "Type-Safe Backend API with Express & PostgreSQL",
+      "Responsive Dark Aesthetics with Tailwind CSS",
+    ],
+    technologies: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Drizzle ORM", "Tailwind CSS"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://musicflow-1.onrender.com/",
+    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1000&q=80",
+    badge: "Featured App",
+  },
+  {
+    title: "NicorAI Platform",
+    subtitle: "AI Enterprise Company Showcase & RAG Interface",
+    type: "Professional / Client Work",
+    description:
+      "Production company web platform for NicorAI, featuring an integrated RAG-based AI chat interface, modular content structure, and AWS cloud deployment.",
+    fullOverview:
+      "Built for NicorAI Intelligent System Pvt Ltd, this web application communicates company services, AI capabilities, and interactive product demonstrations. Includes an AI chat component, clean content rendering, and responsive UI performance.",
+    problem:
+      "Presenting complex AI solutions and platform capabilities through a clean, fast, and accessible digital interface.",
+    solution:
+      "Utilized Next.js App Router for server-rendered page speed, Tailwind CSS for modular visual components, and Framer Motion for subtle interactive transitions.",
+    keyFeatures: [
+      "Next.js App Router with Server-Side Rendering",
+      "RAG AI Chat Assistant Interface Integration",
+      "Responsive Component Architecture with Tailwind CSS",
+      "Framer Motion Micro-Interactions",
+      "AWS Infrastructure Deployment",
+    ],
+    technologies: ["Next.js", "React", "TypeScript", "Node.js", "Express", "AWS", "Tailwind CSS"],
     github: "https://github.com/saliieey?tab=repositories",
     live: "https://nicorai-website.vercel.app",
-    gradient: "from-blue-600 via-cyan-600 to-teal-600",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: TrendingUp, label: "Requests", value: "1M+/day" },
-      { icon: Zap, label: "Uptime", value: "99.9%" },
-      { icon: Shield, label: "Scale", value: "Enterprise" },
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1000&q=80",
+    badge: "Client Work",
+  },
+  {
+    title: "Simpex Services",
+    subtitle: "HVAC & Appliance Repair Booking Platform",
+    type: "Web Application",
+    description:
+      "Agency-grade home services and appliance repair platform with an interactive multi-step booking drawer, dynamic SEO metadata schema, and responsive service pages.",
+    fullOverview:
+      "Simpex Services is a dedicated booking web app built with React 19 and Vite for AC repair, refrigerator maintenance, and washer servicing. Features lazy-loaded routing, an interactive multi-step booking drawer, structured JSON-LD SEO schema integration, and zero layout shift.",
+    problem:
+      "Service business web applications require immediate booking clarity, fast mobile response, and strong search engine visibility.",
+    solution:
+      "Engineered an instant booking modal drawer with client validation, dynamic React Router pages for individual repair categories, and structured meta schema.",
+    keyFeatures: [
+      "Interactive Multi-step Service Booking Drawer",
+      "Category Pages for AC, Washer, and Refrigerator Repair",
+      "Dynamic SEO Metadata & JSON-LD Structured Schema",
+      "React 19 & Vite for Sub-Second Load Speeds",
+      "Responsive Mobile-First UI Layout",
     ],
-    featured: true,
+    technologies: ["React 19", "Vite", "React Router", "Framer Motion", "Lucide Icons", "Vanilla CSS"],
+    github: "https://github.com/saliieey/Simpex-Website",
+    live: "https://simpex-website.vercel.app",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1000&q=80",
+    badge: "Featured Web App",
+  },
+];
+
+const secondaryProjects: ProjectData[] = [
+  {
+    title: "Maelstrom Global Website",
+    subtitle: "Corporate Web Platform & Headless CMS",
+    type: "Client Work",
+    description:
+      "Official company website for Maelstrom Global Pvt Ltd featuring Next.js, custom GSAP scroll triggers, and WordPress Headless CMS integration for dynamic content management.",
+    technologies: ["Next.js", "React", "GSAP", "CSS", "WordPress CMS"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://maelstrom-global-website.vercel.app/",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
   },
   {
     title: "Maelstrom Frames",
     subtitle: "Editorial Photography Portfolio",
+    type: "Frontend Showcase",
     description:
-      "A high-performance, premium editorial-style photography portfolio website. It features dynamic media handling, interactive grid galleries, and cinematic scroll animations to deliver a sophisticated user experience.",
-    technologies: ["NEXT.JS", "TYPESCRIPT", "TAILWINDCSS", "GSAP", "FRAMER MOTION"],
+      "High-performance editorial photography showcase website featuring dynamic media handling, interactive grid galleries, and smooth scroll animations.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Framer Motion"],
     github: "https://github.com/saliieey?tab=repositories",
     live: "https://maelstrom-frames.vercel.app/",
-    gradient: "from-stone-600 via-neutral-600 to-zinc-600",
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: Zap, label: "Scroll", value: "Cinematic" },
-      { icon: Star, label: "Design", value: "Editorial" },
-      { icon: Code2, label: "Routing", value: "Dynamic" },
-    ],
-    featured: true,
-  },
-  {
-    title: "Pikuboo",
-    subtitle: "Web Application",
-    description:
-      "A modern, responsive web application built with React and Vite. Features a dynamic user interface with optimized performance and seamless user experience.",
-    technologies: ["REACT", "VITE", "TAILWINDCSS", "TYPESCRIPT"],
-    github: "https://github.com/saliieey?tab=repositories",
-    live: "https://pikuboo-website.vercel.app/",
-    gradient: "from-pink-500 via-rose-500 to-red-500",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: Zap, label: "Performance", value: "Fast" },
-      { icon: Star, label: "Design", value: "Modern" },
-      { icon: Users, label: "Responsive", value: "100%" },
-    ],
-    featured: true,
-  },
-  {
-    title: "Enterprise MERN Investment, Daily ROI & Multi-Level Referral SaaS Platform",
-    subtitle: "Enterprise SaaS Platform",
-    description:
-      "A production-grade MERN SaaS application featuring secure JWT authentication, MongoDB Atlas integration, investment package management, automated daily ROI payouts, multi-level referral commissions, wallet tracking, audit ledger history, admin-controlled cron execution, and a responsive analytics dashboard.",
-    technologies: ["REACT", "VITE", "NODE.JS", "EXPRESS", "MONGODB", "JWT", "TAILWINDCSS", "NODE CRON"],
-    github: "https://github.com/saliieey?tab=repositories",
-    live: "https://investment-app-inky.vercel.app",
-    gradient: "from-emerald-600 via-teal-600 to-cyan-600",
-    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: TrendingUp, label: "Daily ROI", value: "1.5%" },
-      { icon: Users, label: "Referral Levels", value: "5 Levels" },
-      { icon: Shield, label: "Architecture", value: "Enterprise" },
-    ],
-    featured: true,
-  },
-  {
-    title: "Simpex Services",
-    subtitle: "Home Services & HVAC Maintenance Platform",
-    description:
-      "An agency-grade home services and appliance repair booking platform built with React 19 and Vite. Features lazy-loaded page routing, multi-step booking drawer, Framer Motion animations, comprehensive dynamic SEO metadata schema, and responsive UI for AC, Washer, and Refrigerator repair services.",
-    technologies: ["REACT", "VITE", "REACT ROUTER", "FRAMER MOTION", "LUCIDE ICONS", "VANILLA CSS"],
-    github: "https://github.com/saliieey/Simpex-Website",
-    live: "https://simpex-website.vercel.app",
-    gradient: "from-sky-600 via-blue-600 to-indigo-600",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: Zap, label: "Booking", value: "Instant" },
-      { icon: Star, label: "Services", value: "HVAC & Repair" },
-      { icon: Users, label: "Response", value: "<30 Min" },
-    ],
-    featured: true,
-  },
-  {
-    title: "Podnest YouTube Agent",
-    subtitle: "YouTube Content Agent Platform",
-    description:
-      "Advanced YouTube agent platform built with Next.js, React, and TypeScript. Features intelligent content management, automated workflows, and seamless integration with YouTube APIs for efficient content creation and management.",
-    technologies: ["NEXT.JS", "REACT", "TYPESCRIPT"],
-    github: "https://github.com/saliieey?tab=repositories",
-    live: "https://podnest-youtube-agent.vercel.app",
-    gradient: "from-amber-600 via-orange-600 to-red-600",
-    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: TrendingUp, label: "Efficiency", value: "+45%" },
-      { icon: Zap, label: "Load Time", value: "1.2s" },
-      { icon: Users, label: "Mobile", value: "100%" },
-    ],
-    featured: false,
-  },
-  {
-    title: "Maelstrom Global",
-    subtitle: "Corporate Website & CMS",
-    description:
-      "Official company website for Maelstrom Global Pvt Ltd featuring advanced GSAP animations, responsive design, and WordPress headless CMS integration. Content creators can manage portfolio works, services, and company information through WordPress backend.",
-    technologies: ["NEXT.JS", "GSAP", "CSS", "WORDPRESS", "HEADLESS CMS"],
-    github: "https://github.com/saliieey?tab=repositories",
-    live: "https://maelstrom-global-website.vercel.app/",
-    gradient: "from-green-600 via-emerald-600 to-teal-600",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: Users, label: "Projects", value: "150+" },
-      { icon: TrendingUp, label: "Success", value: "95%" },
-      { icon: Zap, label: "Performance", value: "Fast" },
-    ],
-    featured: false,
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
   },
   {
     title: "LUXE NOIR",
-    subtitle: "Premium E-Commerce Platform",
+    subtitle: "Luxury Product Showcase",
+    type: "Interactive Showcase",
     description:
-      "High-end luxury watch showcase website demonstrating advanced GSAP animations, 3D product visualization, and seamless checkout experience. Features custom CMS, inventory management, and integrated payment processing.",
-    technologies: ["HTML5", "CSS3", "JAVASCRIPT", "GSAP", "THREE.JS", "STRIPE API"],
+      "High-end luxury watch showcase website demonstrating advanced GSAP animation sequences, dark gold-accented styling, and responsive layout craftsmanship.",
+    technologies: ["HTML5", "CSS3", "JavaScript", "GSAP ScrollTrigger"],
     github: "https://github.com/saliieey?tab=repositories",
     live: "https://luxenoirwatches.netlify.app/",
-    gradient: "from-amber-600 via-orange-600 to-red-600",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: TrendingUp, label: "Conversion", value: "+45%" },
-      { icon: Zap, label: "Load Time", value: "1.2s" },
-      { icon: Users, label: "Mobile", value: "100%" },
-    ],
-    featured: false,
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
   },
   {
-    title: "My Portfolio",
-    subtitle: "Professional Portfolio Website",
+    title: "Podnest YouTube Agent",
+    subtitle: "YouTube Content Workflow Platform",
+    type: "Web Application",
     description:
-      "Premium portfolio website showcasing professional skills and experience with advanced GSAP animations and fully responsive design. Built with Next.js, TypeScript, and Tailwind CSS featuring smooth animations and modern UI/UX.",
-    technologies: ["NEXT.JS", "TYPESCRIPT", "TAILWINDCSS", "GSAP", "REACT"],
+      "Content workflow platform built with Next.js, React, and TypeScript for organizing video agent tasks and channel content workflows.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     github: "https://github.com/saliieey?tab=repositories",
-    live: "https://github.com/saliieey?tab=repositories",
-    gradient: "from-indigo-600 via-purple-600 to-pink-600",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=400&fit=crop&q=80",
-    stats: [
-      { icon: TrendingUp, label: "Performance", value: "Fast" },
-      { icon: Zap, label: "Responsive", value: "100%" },
-      { icon: Users, label: "Sections", value: "6+" },
-    ],
-    featured: false,
+    live: "https://podnest-youtube-agent.vercel.app",
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
+  },
+  {
+    title: "Pikuboo",
+    subtitle: "Lightweight Web App",
+    type: "Web Application",
+    description:
+      "Modern, responsive web application built with React and Vite featuring dynamic component architecture and clean frontend performance.",
+    technologies: ["React", "Vite", "TypeScript", "Tailwind CSS"],
+    github: "https://github.com/saliieey?tab=repositories",
+    live: "https://pikuboo-website.vercel.app/",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
   },
 ];
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Set initial state for all cards to prevent layout shifts
-      if (projectsRef.current) {
-        const projectCards = Array.from(projectsRef.current.children) as HTMLElement[];
-        projectCards.forEach((card) => {
-          gsap.set(card, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            clearProps: "transform",
-          });
-        });
-      }
-
-      // Projects animation - start visible, just animate in
-      if (projectsRef.current) {
-        const projectCards = projectsRef.current.children;
-        gsap.from(projectCards, {
-          y: 50,
-          opacity: 0.3,
-          scale: 0.95,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-            refreshPriority: -1,
-          },
-        });
-      }
-
-      // Refresh ScrollTrigger to ensure proper initialization on reload
-      ScrollTrigger.refresh();
-
-      // Subtle hover animations - image zoom only, no card movement
-      const cards = document.querySelectorAll(".project-card");
-      cards.forEach((card) => {
-        const gradientHeader = card.querySelector(".gradient-header") as HTMLElement;
-        const cardImage = gradientHeader?.querySelector("img") as HTMLImageElement;
-        
-        // Mouse enter - subtle image zoom only
-        card.addEventListener("mouseenter", () => {
-          gsap.killTweensOf([gradientHeader, cardImage]);
-          
-          if (cardImage) {
-            gsap.to(cardImage, {
-            scale: 1.05,
-            duration: 0.5,
-            ease: "power2.out",
-            });
-          }
-          
-          gsap.to(gradientHeader, {
-            filter: "brightness(1.05)",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-        });
-        
-        // Mouse leave - smooth reset
-        card.addEventListener("mouseleave", () => {
-          gsap.killTweensOf([gradientHeader, cardImage]);
-          
-          if (cardImage) {
-            gsap.to(cardImage, {
-              scale: 1,
-              duration: 0.5,
-              ease: "power2.inOut",
-            });
-          }
-          
-          gsap.to(gradientHeader, {
-            filter: "brightness(1)",
-            duration: 0.4,
-            ease: "power2.inOut",
-          });
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  const [showSecondary, setShowSecondary] = useState(false);
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="relative py-16 md:py-20 lg:py-32 overflow-hidden z-10"
-    >
-      {/* Background Effects */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#0ea5e9] rounded-full filter blur-[120px]"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#10b981] rounded-full filter blur-[120px]"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4">
-            <span className="text-sm text-[#0ea5e9] uppercase tracking-wider font-semibold">Portfolio</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-space)" }}>
-            Featured Projects
-          </h2>
-          <div className="w-20 h-1 bg-[#0ea5e9] mx-auto mb-6"></div>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            Showcasing innovative solutions built with cutting-edge technologies. 
-            Each project demonstrates expertise in full-stack development, system architecture, and user experience design.
-          </p>
-        </div>
-
-        <div
-          ref={projectsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
-        >
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="project-card bg-[#0a0a0f] border-2 border-white/10 rounded-xl overflow-hidden hover:border-[#0ea5e9]/50 transition-all duration-300 group relative flex flex-col cursor-pointer h-full"
-              style={{ 
-                opacity: 1,
-                visibility: "visible",
-                transform: "translateY(0) scale(1)",
-                position: "relative"
-              }}
+    <>
+      <section
+        id="projects"
+        className="relative py-20 md:py-28 overflow-hidden z-10 border-t border-white/5"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="mb-14">
+            <span className="text-xs font-bold text-[#0ea5e9] uppercase tracking-wider">
+              04 — Portfolio Centerpiece
+            </span>
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2"
+              style={{ fontFamily: "var(--font-space)" }}
             >
-              {/* Featured Badge */}
-              {project.featured && (
-                <div className="absolute top-3 right-3 z-20">
-                  <div className="bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5 shadow-lg">
-                    <Star className="w-2.5 h-2.5 fill-white" />
-                    FEATURED
-                  </div>
-                </div>
-              )}
-
-              {/* Project Cover Image */}
-              <div className={`gradient-header relative h-40 lg:h-44 overflow-hidden bg-gradient-to-br ${project.gradient}`}>
-                <Image
-                  src={project.image}
-                  alt={`${project.title} - ${project.subtitle}`}
-                  fill
-                  className="object-cover transition-transform duration-600 ease-out"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={project.featured}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent opacity-80"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-transparent"></div>
-              </div>
-
-              <div className="card-content p-4 lg:p-5 flex flex-col flex-1">
-                <div className="mb-2">
-                  <h3 className="text-lg lg:text-xl font-bold text-white mb-0.5 group-hover:text-[#0ea5e9] transition-colors truncate">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-[#0ea5e9] font-semibold truncate">{project.subtitle}</p>
-                </div>
-                
-                <p 
-                  className="text-gray-300 mb-3 text-xs lg:text-sm leading-relaxed flex-1"
-                  style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}
-                >
-                  {project.description}
-                </p>
-
-                {/* Stats - More Compact */}
-                {project.stats && (
-                  <div className="grid grid-cols-3 gap-2 mb-3 pb-3 border-b border-white/10">
-                    {project.stats.map((stat, statIndex) => {
-                      const Icon = stat.icon;
-                      return (
-                        <div key={statIndex} className="stat-item text-center">
-                          <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-[#0ea5e9] mx-auto mb-0.5" />
-                          <div className="text-[10px] lg:text-xs text-gray-500 mb-0.5 leading-tight">{stat.label}</div>
-                          <div className="text-xs lg:text-sm font-bold text-white">{stat.value}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {/* Technologies - More Compact */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="tech-tag px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] lg:text-xs font-semibold text-gray-300 uppercase hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9]/30 hover:text-[#0ea5e9] transition-all duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="px-2 py-0.5 text-[10px] lg:text-xs font-semibold text-gray-500">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-
-                {/* Links - More Compact */}
-                <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-auto">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors group/link font-semibold"
-                  >
-                    <Github className="w-4 h-4 group-hover/link:scale-110 transition-transform" />
-                    <span className="text-xs lg:text-sm">Code</span>
-                  </a>
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[#0ea5e9] hover:text-[#38bdf8] transition-colors group/link font-bold"
-                  >
-                    <span className="text-xs lg:text-sm">Live Demo</span>
-                    <ArrowRight className="w-3 h-3 lg:w-4 lg:h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <div className="inline-block bg-[#0a0a0f] border-2 border-white/10 rounded-2xl p-8 max-w-2xl hover:border-[#0ea5e9]/50 transition-all duration-300">
-            <h3 className="text-2xl font-bold text-white mb-3">Want to see more?</h3>
-            <p className="text-gray-400 mb-6">
-              Explore more projects, contributions, and open-source work on GitHub
+              Featured Projects
+            </h2>
+            <p className="text-sm sm:text-base text-gray-400 max-w-2xl mt-2">
+              Curated selection of full-stack web applications, SaaS systems, and client products. Click any project to inspect case study details.
             </p>
-            <a
-              href="https://github.com/saliieey?tab=repositories"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white rounded-xl font-bold hover:shadow-2xl hover:shadow-[#0ea5e9]/50 transition-all duration-300 transform hover:scale-105"
-            >
-              <Github className="w-5 h-5" />
-              View All Projects on GitHub
-            </a>
+            <div className="w-16 h-1 bg-[#0ea5e9] mt-4 rounded-full" />
+          </div>
+
+          {/* Primary Featured Projects Grid (Top 4) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {featuredProjects.map((project, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
+                className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-[#0ea5e9]/40 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+              >
+                {/* Thumbnail Image */}
+                <div className="relative h-52 sm:h-60 overflow-hidden bg-gradient-to-br from-slate-900 to-black">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#090a0f] via-transparent to-transparent opacity-90" />
+
+                  {/* Type Badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 bg-black/70 backdrop-blur-md border border-white/10 rounded-md text-[11px] font-bold text-[#0ea5e9] uppercase tracking-wider">
+                      {project.type}
+                    </span>
+                  </div>
+
+                  {/* Quick Inspection Action */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="px-3 py-1 bg-[#0ea5e9] text-white text-[11px] font-bold rounded-md flex items-center gap-1.5 shadow-lg">
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>Case Study</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6 flex flex-col flex-1 space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#0ea5e9] transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs font-semibold text-[#0ea5e9] mt-1">{project.subtitle}</p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed flex-1 line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack Pills */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.technologies.map((tech, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="px-2.5 py-0.5 bg-white/5 border border-white/10 rounded text-[11px] font-semibold text-gray-300 uppercase"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Footer Links */}
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-auto text-xs">
+                    <button
+                      type="button"
+                      className="text-[#0ea5e9] font-bold flex items-center gap-1.5 hover:underline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProject(project);
+                      }}
+                    >
+                      <span>Read Case Study</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    <div className="flex items-center gap-3">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-gray-400 hover:text-white transition-colors"
+                          aria-label="GitHub Repository"
+                        >
+                          <Github className="w-4 h-4" />
+                        </a>
+                      )}
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-gray-400 hover:text-white transition-colors"
+                          aria-label="Live Demo Link"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Expandable Secondary Projects Section */}
+          <div className="mt-14 space-y-6">
+            <div className="text-center">
+              <button
+                onClick={() => setShowSecondary(!showSecondary)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-sm rounded-xl transition-all"
+              >
+                <span>{showSecondary ? "Hide Additional Projects" : "View Additional Projects"}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showSecondary ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+
+            {showSecondary && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 animate-in fade-in duration-300">
+                {secondaryProjects.map((project, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-[#0ea5e9]/40 rounded-xl overflow-hidden transition-all duration-300 flex flex-col cursor-pointer"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    {project.image && (
+                      <div className="relative h-40 overflow-hidden bg-gradient-to-br from-slate-900 to-black">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#090a0f] via-transparent to-transparent opacity-85" />
+                        <div className="absolute top-3 left-3">
+                          <span className="px-2.5 py-0.5 bg-black/70 backdrop-blur-md border border-white/10 rounded text-[10px] font-bold text-[#0ea5e9] uppercase tracking-wider">
+                            {project.type}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-5 flex-1 flex flex-col space-y-3">
+                      <div className="flex items-center justify-between text-xs">
+                        <h4 className="text-base font-bold text-white group-hover:text-[#0ea5e9] transition-colors">
+                          {project.title}
+                        </h4>
+                        {project.live && (
+                          <a
+                            href={project.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-[#0ea5e9] hover:underline flex items-center gap-1 text-xs font-semibold"
+                          >
+                            <span>Live</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-gray-300 leading-relaxed flex-1 line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1 pt-2">
+                        {project.technologies.map((tech, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2 py-0.5 bg-white/5 border border-white/5 rounded text-[10px] font-semibold text-gray-400 uppercase"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Case Study Detail Modal */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+    </>
   );
 }

@@ -1,249 +1,59 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Menu, X, ChevronRight } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { Menu, X, FileText, ChevronRight } from "lucide-react";
 
 const navItems = [
-  { name: "HOME", href: "#hero" },
-  { name: "ABOUT", href: "#about" },
-  { name: "SKILLS", href: "#skills" },
-  { name: "EXPERIENCE", href: "#experience" },
-  { name: "PROJECTS", href: "#projects" },
-  { name: "CONTACT", href: "#contact" },
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "Work", href: "#projects" },
+  { name: "Skills", href: "#skills" },
+  { name: "Contact", href: "#contact" },
 ];
 
-export default function Navigation() {
+interface NavigationProps {
+  onOpenResume?: () => void;
+}
+
+export default function Navigation({ onOpenResume }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const navRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let ticking = false;
-    
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 40);
 
-          // Update active section - optimized
-          const scrollPos = window.scrollY + 200;
-          let newActiveSection = "";
+      const scrollPos = window.scrollY + 180;
+      let currentSection = "";
 
-          navItems.forEach((item) => {
-            const section = document.querySelector(item.href);
-            if (section) {
-              const rect = section.getBoundingClientRect();
-              const top = rect.top + window.scrollY;
-              const bottom = top + rect.height;
-              if (scrollPos >= top && scrollPos < bottom) {
-                newActiveSection = item.href;
-              }
-            }
-          });
-
-          setActiveSection((prev) => {
-            if (prev !== newActiveSection) {
-              return newActiveSection;
-            }
-            return prev;
-          });
-
-          // Update progress bar - throttled
-          const winScroll = document.documentElement.scrollTop;
-          const height =
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight;
-          const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-          
-          if (progressRef.current && scrolled >= 0 && scrolled <= 100) {
-            gsap.to(progressRef.current, {
-              width: `${scrolled}%`,
-              duration: 0.1,
-              ease: "none",
-            });
+      navItems.forEach((item) => {
+        const el = document.querySelector(item.href);
+        if (el) {
+          const top = (el as HTMLElement).offsetTop;
+          const height = (el as HTMLElement).offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            currentSection = item.href;
           }
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
+        }
+      });
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (progressRef.current) {
-        gsap.killTweensOf(progressRef.current);
-      }
-    };
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    if (navRef.current) {
-      gsap.set(navRef.current, { opacity: 1, y: 0 });
-      gsap.from(navRef.current, {
-        y: -20,
-        opacity: 0.8,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      // Prevent body scroll when menu is open
+    if (isMobileOpen) {
       document.body.style.overflow = "hidden";
-      
-      // Ensure menu items are visible and animate them in
-      if (mobileMenuRef.current) {
-        const menuItems = mobileMenuRef.current.querySelectorAll(".menu-item");
-        menuItems.forEach((item, index) => {
-          const itemElement = item as HTMLElement;
-          // Set initial visible state - ensure it's visible
-          gsap.set(itemElement, {
-            opacity: 1,
-            visibility: "visible",
-            display: "flex",
-            y: 0,
-            x: 0,
-          });
-          
-          // Animate in with a slight delay for each item
-          gsap.from(itemElement, {
-            opacity: 0,
-            y: 20,
-            duration: 0.4,
-            delay: index * 0.05,
-            ease: "power2.out",
-            immediateRender: false,
-          });
-        });
-      }
     } else {
       document.body.style.overflow = "";
     }
-    
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    // Setup desktop nav hover animations
-    const desktopNavLinks = document.querySelectorAll(".nav-link");
-    const desktopCleanups: Array<() => void> = [];
-    
-    desktopNavLinks.forEach((link) => {
-      const linkElement = link as HTMLElement;
-      const isActive = linkElement.classList.contains("text-[#0ea5e9]");
-      
-      const handleMouseEnter = () => {
-        if (!isActive) {
-          gsap.to(linkElement, {
-            color: "#0ea5e9",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-      };
-      
-      const handleMouseLeave = () => {
-        if (!isActive) {
-          gsap.to(linkElement, {
-            color: "#9ca3af",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-      };
-
-      link.addEventListener("mouseenter", handleMouseEnter);
-      link.addEventListener("mouseleave", handleMouseLeave);
-
-      desktopCleanups.push(() => {
-        link.removeEventListener("mouseenter", handleMouseEnter);
-        link.removeEventListener("mouseleave", handleMouseLeave);
-      });
-    });
-
-    // Setup mobile menu hover animations
-    const menuItems = document.querySelectorAll(".menu-item");
-    const mobileCleanups: Array<() => void> = [];
-    
-    menuItems.forEach((item) => {
-      const itemElement = item as HTMLElement;
-      const chevron = itemElement.querySelector(".menu-item-chevron") as SVGSVGElement;
-      const textSpan = itemElement.querySelector(".menu-item-text") as HTMLElement;
-      const isActive = itemElement.classList.contains("bg-[#0ea5e9]/20");
-      
-      const handleMouseEnter = () => {
-        if (!isActive && chevron && textSpan) {
-          gsap.to(itemElement, {
-            backgroundColor: "rgba(14, 165, 233, 0.1)",
-            borderColor: "rgba(14, 165, 233, 0.5)",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to(textSpan, {
-            color: "#0ea5e9",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to(chevron, {
-            x: 5,
-            color: "#0ea5e9",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-        }
-      };
-      
-      const handleMouseLeave = () => {
-        if (!isActive && chevron && textSpan) {
-          gsap.to(itemElement, {
-            backgroundColor: "transparent",
-            borderColor: "rgba(255, 255, 255, 0.1)",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to(textSpan, {
-            color: "#e5e7eb",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to(chevron, {
-            x: 0,
-            color: "#9ca3af",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-        }
-      };
-
-      item.addEventListener("mouseenter", handleMouseEnter);
-      item.addEventListener("mouseleave", handleMouseLeave);
-
-      mobileCleanups.push(() => {
-        item.removeEventListener("mouseenter", handleMouseEnter);
-        item.removeEventListener("mouseleave", handleMouseLeave);
-      });
-    });
-
-    return () => {
-      desktopCleanups.forEach(cleanup => cleanup());
-      mobileCleanups.forEach(cleanup => cleanup());
-    };
-  }, [isMobileMenuOpen, activeSection]);
+  }, [isMobileOpen]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -254,156 +64,121 @@ export default function Navigation() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setIsMobileMenuOpen(false);
+    setIsMobileOpen(false);
   };
 
   return (
-    <>
-      {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-0.5 bg-black/30 z-[60]">
-        <div
-          ref={progressRef}
-          className="h-full bg-[#0ea5e9]"
-          style={{ width: "0%" }}
-        />
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+        isScrolled
+          ? "bg-[#090a0f]/90 backdrop-blur-md border-b border-white/10 py-3.5"
+          : "bg-transparent py-3.5 md:py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Name / Brand */}
+        <a
+          href="#hero"
+          onClick={(e) => handleNavClick(e, "#hero")}
+          className="text-base sm:text-lg font-bold text-white tracking-wide hover:text-[#0ea5e9] transition-colors"
+          style={{ fontFamily: "var(--font-space)" }}
+        >
+          Mohamed Salih CK
+        </a>
+
+        {/* Desktop Links */}
+        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.href;
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className={`px-3 py-1.5 text-xs font-semibold tracking-wide uppercase transition-colors rounded-lg ${
+                  isActive
+                    ? "text-[#0ea5e9] bg-[#0ea5e9]/10"
+                    : "text-gray-300 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {item.name}
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Header Right Actions */}
+        <div className="hidden md:flex items-center gap-3">
+          {onOpenResume && (
+            <button
+              onClick={onOpenResume}
+              className="px-3.5 py-1.5 bg-[#0ea5e9]/10 hover:bg-[#0ea5e9]/20 border border-[#0ea5e9]/30 text-[#0ea5e9] text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Resume</span>
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Menu Toggle Button */}
+        <button
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none rounded-lg bg-white/5 border border-white/10 transition-colors"
+          aria-label="Toggle Navigation Menu"
+        >
+          {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
-      <nav
-        ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-[#0a0a0f]/95 backdrop-blur-md border-b border-white/5 pt-4 pb-3 md:py-4"
-            : "bg-[#0a0a0f]/90 backdrop-blur-sm border-b border-white/5 pt-5 pb-3 md:py-6"
-        }`}
-        style={{ opacity: 1 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Logo/Name */}
-            <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white uppercase tracking-wider" style={{ fontFamily: "var(--font-space)" }}>
-              Mohamed Salih . CK
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1">
-              {navItems.map((item, index) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`nav-link px-3 lg:px-4 py-2 text-xs font-semibold uppercase tracking-wider relative transition-colors ${
-                    activeSection === item.href
-                      ? "text-[#0ea5e9]"
-                      : "text-gray-400"
-                  }`}
-                >
-                  <span className="relative z-10">{item.name}</span>
-                  {activeSection === item.href && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0ea5e9] rounded-full"></span>
-                  )}
-                </a>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
+      {/* Mobile Drawer Menu */}
+      {isMobileOpen && (
+        <div className="md:hidden fixed inset-0 z-50 bg-[#090a0f] flex flex-col p-6 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pb-6 border-b border-white/10">
+            <span className="text-base font-bold text-white" style={{ fontFamily: "var(--font-space)" }}>
+              Mohamed Salih CK
+            </span>
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden text-white hover:text-[#0ea5e9] transition-colors p-2 -mr-2 relative z-50"
-              aria-label="Toggle menu"
+              onClick={() => setIsMobileOpen(false)}
+              className="p-2 text-gray-400 hover:text-white"
+              aria-label="Close menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <X className="w-6 h-6" />
             </button>
           </div>
-        </div>
-      </nav>
 
-      {/* Mobile Menu Overlay - Outside nav for proper z-index stacking */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-            style={{ pointerEvents: 'auto' }}
-          />
-          
-          {/* Mobile Menu - Full Screen Professional Design */}
-          <div
-            ref={mobileMenuRef}
-            className="md:hidden fixed inset-0 bg-[#0a0a0f] z-[101] overflow-y-auto flex flex-col"
-            style={{ 
-              pointerEvents: 'auto',
-              width: '100vw',
-              height: '100vh',
-              maxHeight: '100vh'
-            }}
-          >
-            {/* Menu Header - Fixed at Top */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#0a0a0f] flex-shrink-0 sticky top-0 z-10">
-              <div className="text-xl font-bold text-white uppercase tracking-wider" style={{ fontFamily: "var(--font-space)" }}>
-                MENU
-              </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors p-2 -mr-2"
-                aria-label="Close menu"
+          <div className="flex-1 py-8 space-y-3">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/10 rounded-xl text-base font-bold text-white uppercase tracking-wider hover:border-[#0ea5e9]"
               >
-                <X size={24} />
-              </button>
-            </div>
-
-            {/* Navigation Links - Centered Professional Layout */}
-            <div 
-              className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-8 w-full min-h-0"
-              style={{
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              <div className="space-y-3 w-full max-w-md mx-auto">
-                {navItems.map((item, index) => {
-                  const isActive = activeSection === item.href;
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href)}
-                      className={`menu-item w-full px-5 py-4 rounded-xl text-base sm:text-lg font-bold uppercase tracking-wider flex items-center justify-between relative transition-all ${
-                        isActive
-                          ? "bg-[#0ea5e9]/20 border-2 border-[#0ea5e9] shadow-lg shadow-[#0ea5e9]/30 text-white"
-                          : "border-2 border-white/10 text-gray-200 hover:border-[#0ea5e9]/30"
-                      }`}
-                      style={{ 
-                        minHeight: "56px",
-                      }}
-                    >
-                      <span 
-                        className="flex-1 text-left pr-4 font-semibold menu-item-text"
-                      >
-                        {item.name}
-                      </span>
-                      <ChevronRight 
-                        className={`w-5 h-5 flex-shrink-0 menu-item-chevron transition-colors ${
-                          isActive ? "text-[#0ea5e9]" : "text-gray-400"
-                        }`}
-                      />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Menu Footer - Fixed at Bottom */}
-            <div className="px-6 py-4 border-t border-white/10 bg-[#0a0a0f] flex-shrink-0">
-              <div className="text-center text-xs text-gray-500">
-                © {new Date().getFullYear()} Mohamed Salih . CK
-              </div>
-            </div>
+                <span>{item.name}</span>
+                <ChevronRight className="w-5 h-5 text-[#0ea5e9]" />
+              </a>
+            ))}
           </div>
-        </>
+
+          <div className="pt-6 border-t border-white/10 space-y-3">
+            {onOpenResume && (
+              <button
+                onClick={() => {
+                  setIsMobileOpen(false);
+                  onOpenResume();
+                }}
+                className="w-full py-3 bg-[#0ea5e9] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2"
+              >
+                <FileText className="w-4 h-4" />
+                <span>View Resume</span>
+              </button>
+            )}
+            <p className="text-center text-xs text-gray-500">
+              © {new Date().getFullYear()} Mohamed Salih CK
+            </p>
+          </div>
+        </div>
       )}
-    </>
+    </header>
   );
 }

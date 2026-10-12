@@ -1,69 +1,39 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
+import Preloader from "@/components/Preloader";
+import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
+import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
-import Navigation from "@/components/Navigation";
-import Preloader from "@/components/Preloader";
-
-gsap.registerPlugin(ScrollTrigger);
+import ResumeModal from "@/components/ResumeModal";
 
 export default function Home() {
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Wait for preloader to complete before showing main content
-    const checkPreloader = setInterval(() => {
-      const preloader = document.getElementById("preloader");
-      if (preloader && preloader.style.display === "none") {
-        setIsLoading(false);
-        clearInterval(checkPreloader);
-      }
-    }, 100);
-
-    return () => clearInterval(checkPreloader);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading) {
-      const ctx = gsap.context(() => {
-        // Smooth page load animation after preloader
-        if (mainRef.current) {
-          gsap.from(mainRef.current, {
-            opacity: 0,
-            y: 20,
-            duration: 1,
-            ease: "power3.out",
-          });
-        }
-      }, mainRef);
-
-      return () => ctx.revert();
-    }
-  }, [isLoading]);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   return (
     <>
       <Preloader />
-      <main ref={mainRef} className="relative min-h-screen">
-        <Navigation />
-        <div className="relative z-10">
-          <Hero />
+      <div className="relative min-h-screen bg-[#090a0f] text-white selection:bg-[#0ea5e9] selection:text-white overflow-x-clip">
+        <Navigation onOpenResume={() => setIsResumeOpen(true)} />
+
+        <main className="relative z-10">
+          <Hero onOpenResume={() => setIsResumeOpen(true)} />
           <About />
-          <Skills />
           <Experience />
+          <Skills />
           <Projects />
-          <Contact />
-        </div>
-      </main>
+          <Contact onOpenResume={() => setIsResumeOpen(true)} />
+        </main>
+
+        <ResumeModal
+          isOpen={isResumeOpen}
+          onClose={() => setIsResumeOpen(false)}
+        />
+      </div>
     </>
   );
 }
-
