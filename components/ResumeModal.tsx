@@ -101,7 +101,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           <div className="space-y-2">
             <h2 className="text-xs font-bold uppercase tracking-wider text-[#0ea5e9]">Summary</h2>
             <p className="text-sm leading-relaxed text-gray-300">
-              Full-Stack Developer with over 1.5 years of practical experience building web applications using React, Next.js, Node.js, Express, MongoDB, and PostgreSQL. Experienced in API integration, state management, UI/UX implementation, performance optimization, and custom CMS integrations.
+              Full-Stack Developer with 2.5+ years of practical experience building web applications using React, Next.js, Node.js, Express, MongoDB, and PostgreSQL. Experienced in API integration, state management, UI/UX implementation, performance optimization, and custom CMS integrations.
             </p>
           </div>
 

@@ -158,7 +158,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </div>
             <div>
               <div className="text-lg sm:text-xl font-bold text-white leading-tight" style={{ fontFamily: "var(--font-space)" }}>
-                1.5+ Years
+                2.5+ Years
               </div>
               <div className="text-[11px] sm:text-xs text-gray-400 font-medium">Professional Software Experience</div>
             </div>

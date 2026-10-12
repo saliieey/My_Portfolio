@@ -57,7 +57,7 @@ export default function About() {
                 <span>Full-Stack Developer based in Kerala, India</span>
               </h3>
               <p className="text-sm sm:text-base">
-                I have over 1.5 years of practical software development experience, specializing in full-stack web applications built with <strong className="text-white">React, Next.js, Node.js, Express, MongoDB, and PostgreSQL</strong>.
+                I have 2.5+ years of practical software development experience, specializing in full-stack web applications built with <strong className="text-white">React, Next.js, Node.js, Express, MongoDB, and PostgreSQL</strong>.
               </p>
               <p className="text-sm sm:text-base">
                 My work spans building client platforms at <strong className="text-white">Maelstrom Global</strong>, AI application interfaces at <strong className="text-white">NicorAI</strong>, and full-stack MERN SaaS products such as investment engines, music streaming platforms, and agency booking web apps.
